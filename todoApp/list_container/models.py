@@ -7,8 +7,11 @@ class ListContainer(models.Model):
     def __str__(self):
         return self.title
     
-    title = models.CharField(max_length=100, unique=True)
-
+    title = models.CharField(max_length=100, 
+                            unique=True,
+                            error_messages={'unique': 'This title is not unique, please try again'},
+                            help_text='Must be a unique title',
+                            )
 
 class Task(models.Model):
 
@@ -17,10 +20,10 @@ class Task(models.Model):
     
     list_container = models.ForeignKey(ListContainer,  on_delete=models.CASCADE, default=1)
     item_name = models.CharField(max_length=100, 
-                                    unique=True, 
-                                    error_messages={'unique': 'This title is not unique, please try again'},
-                                    help_text='Must be a unique title',
+                                unique=True, 
+                                error_messages={'unique': 'This title is not unique, please try again'},
+                                help_text='Must be a unique title',
                                     )
     details = models.TextField(null=True, blank=True, max_length=10000)
-    priority = models.IntegerField()
     date = models.DateField(default=datetime.date.today)
+

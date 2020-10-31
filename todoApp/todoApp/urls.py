@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from list_container import views as list_container_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', list_container_views.index , name='index'),
+    path('item-list/<int:container_id>', list_container_views.check_contained_items , name='item-list'),
 ]
+

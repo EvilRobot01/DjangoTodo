@@ -1,0 +1,5 @@
+{% for list in list_container %}
+    <li>
+        <a href="{% url 'item-list' list.id %}"><h2> {{ list.title }}</h2></a>
+    </li>
+{% endfor %}

@@ -19,9 +19,9 @@ class TaskModelForm(forms.ModelForm):
             'date'
         ] 
     
-    def save(self, commit=True, *args, **kwargs):
-        obj = super(TaskModelForm, self).save(commit=False, *args, **kwargs)
-        #obj.list_container = container_id
+    def save(self, container_id, commit=True):
+        obj = super().save(commit=False)
+        obj.list_container = ListContainer.objects.get(pk=container_id)
         if commit:
             obj.save()
         return obj

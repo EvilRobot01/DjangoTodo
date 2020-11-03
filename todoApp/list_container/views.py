@@ -1,6 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Task, ListContainer
-from django.shortcuts import render, redirect
 from .forms import ListContainerModelForm, TaskModelForm
 
 # Create your views here.
@@ -25,10 +24,49 @@ def container(request, container_id):
     task_form = TaskModelForm(request.POST or None)
     if request.method == 'POST':
         if task_form.is_valid():
-            new_task = task_form.save(commit=False)
-            new_task.list_container = container_id
+            new_task = task_form.save(container_id, commit=False )
             new_task.save()
-        return redirect('/')
-    return render(request, 'list_container/item_list.html', {'contained_items': contained_items, 'task_form':task_form})
+        return redirect(f'/item-list/{container_id}')
+    return render(request, 'list_container/item-list.html', {'contained_items': contained_items, 'task_form':task_form})
 
 
+def item_details(request, item_id):
+    item = Task.objects.get(id=item_id)
+    context = {
+        'item': item,
+    }
+    template = 'list_container/item-detail.html'
+    return render(request, template, context)
+
+
+def item_update(request, item_id):
+    #get single item
+    item = Task.objects.get(id=item_id)
+    #update item
+    task_form = TaskModelForm(request.POST or None, instance=item)
+    if request.method == 'POST':
+        if task_form.is_valid():
+            new_task = task_form.save(item.list_container.id, commit=False )
+            new_task.save()
+        return redirect(f'/item-list/{item.list_container.id}')
+    context = {
+        'task_form':task_form
+    }
+    template = 'list_container/item-update.html'
+    return render(request, template, context)
+
+def item_delete(request, item_id):
+    #get single item
+    item = Task.objects.get(id=item_id)
+    #update item
+    task_form = TaskModelForm(request.POST or None, instance=item)
+    if request.method == 'POST':
+        if task_form.is_valid():
+            new_task = task_form.save(item.list_container.id, commit=False )
+            new_task.save()
+        return redirect(f'/item-list/{item.list_container.id}')
+    context = {
+        'task_form':task_form
+    }
+    template = 'list_container/item-update.html'
+    return render(request, template, context)

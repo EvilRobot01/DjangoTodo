@@ -16,9 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from list_container import views as list_container_views
+from users import views as user_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    #list_container
     path('', list_container_views.index , name='index'),
     path('list-update/<int:list_id>', list_container_views.list_update , name='list-update'),
     path('list-delete/<int:list_id>', list_container_views.list_delete , name='list-delete'),
@@ -26,5 +29,8 @@ urlpatterns = [
     path('item-details/<int:item_id>', list_container_views.item_details , name='item-details'),
     path('item-update/<int:item_id>', list_container_views.item_update , name='item-update'),
     path('item-delete/<int:item_id>', list_container_views.item_delete , name='item-delete'),
+
+    #users
+    path('register/', user_views.register , name='register'),
 ]
 

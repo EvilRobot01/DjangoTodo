@@ -31,6 +31,19 @@ def list_update(request, list_id):
             new_task.save()
         return redirect('/')
     return render(request, template, context)
+
+def list_delete(request, list_id):
+    #get single item
+    container = ListContainer.objects.get(id=list_id)
+    context = {
+        'container':container
+    }
+    template = 'list_container/list-delete.html'
+    #delete item
+    if request.method == 'POST':
+        container.delete()
+        return redirect('/')
+    return render(request, template, context)
     
 
 def container(request, container_id):

@@ -1,3 +1,10 @@
+<h1>Create new item</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ task_form.as_p }}
+
+    <input type="submit" value="Create">
+</form>
 {% for item in contained_items %}
     <li>
         <a href=""><h2> {{ item.item_name }}</h2></a>

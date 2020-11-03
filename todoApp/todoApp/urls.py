@@ -20,6 +20,6 @@ from list_container import views as list_container_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', list_container_views.index , name='index'),
-    path('item-list/<int:container_id>', list_container_views.check_contained_items , name='item-list'),
+    path('item-list/<int:container_id>', list_container_views.container , name='item-list'),
 ]
 

@@ -4,3 +4,7 @@
         <h2> {{ item.details }}</h2>
         <h2> {{ item.date }}</h2>
 
+        <a href="/item-list/{{item.list_container.id}}">Back</a>
+        <a href="{% url 'item-update' item.id %}"><button>Update</button></a>
+        <a href="{% url 'item-delete' item.id %}"><button>Delete</button></a>
+

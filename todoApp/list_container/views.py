@@ -15,6 +15,22 @@ def index(request):
             new_container.save()
         return redirect('/')
     return render(request, 'list_container/index.html', {'list_container': list_container, 'container_form':container_form})
+
+def list_update(request, list_id):
+    #get single item
+    container  = ListContainer.objects.get(id=list_id)
+    #update item
+    container_form = ListContainerModelForm(request.POST or None, instance=container)
+    context = {
+        'container_form':container_form
+    }
+    template = 'list_container/list-update.html'
+    if request.method == 'POST':
+        if container_form.is_valid():
+            new_task = container_form.save(commit=False )
+            new_task.save()
+        return redirect('/')
+    return render(request, template, context)
     
 
 def container(request, container_id):
@@ -58,15 +74,12 @@ def item_update(request, item_id):
 def item_delete(request, item_id):
     #get single item
     item = Task.objects.get(id=item_id)
-    #update item
-    task_form = TaskModelForm(request.POST or None, instance=item)
-    if request.method == 'POST':
-        if task_form.is_valid():
-            new_task = task_form.save(item.list_container.id, commit=False )
-            new_task.save()
-        return redirect(f'/item-list/{item.list_container.id}')
     context = {
-        'task_form':task_form
+        'item':item
     }
-    template = 'list_container/item-update.html'
+    template = 'list_container/item-delete.html'
+    #delete item
+    if request.method == 'POST':
+        item.delete()
+        return redirect(f'/item-list/{item.list_container.id}')
     return render(request, template, context)

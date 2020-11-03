@@ -8,5 +8,8 @@
 {% for list in list_container %}
     <li>
         <a href="{% url 'item-list' list.id %}"><h2> {{ list.title }}</h2></a>
+        <a href="{% url 'list-update' list.id %}"><button>Update</button></a>
+        <a href="{% url 'list-delete' list.id %}"><button>Delete</button></a>
+        
     </li>
 {% endfor %}

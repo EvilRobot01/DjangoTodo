@@ -20,6 +20,7 @@ from list_container import views as list_container_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', list_container_views.index , name='index'),
+    path('list-update/<int:list_id>', list_container_views.list_update , name='list-update'),
     path('item-list/<int:container_id>', list_container_views.container , name='item-list'),
     path('item-details/<int:item_id>', list_container_views.item_details , name='item-details'),
     path('item-update/<int:item_id>', list_container_views.item_update , name='item-update'),

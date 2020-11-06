@@ -1,21 +1,28 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+
 from .models import Task, ListContainer
 from .forms import ListContainerModelForm, TaskModelForm
 
-# Create your views here.
 
+# Create your views here.
+@login_required
 def index(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
     #list all containers
-    list_container = ListContainer.objects.all()
+    list_container = ListContainer.objects.all().filter(user=request.user)
     #Create new container
     container_form = ListContainerModelForm(request.POST or None)
     if request.method == 'POST':
         if container_form.is_valid():
             new_container = container_form.save(commit=False)
+            new_container.user = request.user
             new_container.save()
         return redirect('/')
     return render(request, 'list_container/index.html', {'list_container': list_container, 'container_form':container_form})
 
+@login_required
 def list_update(request, list_id):
     #get single item
     container  = ListContainer.objects.get(id=list_id)
@@ -27,11 +34,13 @@ def list_update(request, list_id):
     template = 'list_container/list-update.html'
     if request.method == 'POST':
         if container_form.is_valid():
-            new_task = container_form.save(commit=False )
-            new_task.save()
+            new_container = container_form.save(commit=False )
+            new_container.user = request.user
+            new_container.save()
         return redirect('/')
     return render(request, template, context)
 
+@login_required
 def list_delete(request, list_id):
     #get single item
     container = ListContainer.objects.get(id=list_id)
@@ -45,7 +54,7 @@ def list_delete(request, list_id):
         return redirect('/')
     return render(request, template, context)
     
-
+@login_required
 def container(request, container_id):
     #list all items
     contained_items = Task.objects.all().filter(list_container=container_id)
@@ -58,7 +67,7 @@ def container(request, container_id):
         return redirect(f'/item-list/{container_id}')
     return render(request, 'list_container/item-list.html', {'contained_items': contained_items, 'task_form':task_form})
 
-
+@login_required
 def item_details(request, item_id):
     item = Task.objects.get(id=item_id)
     context = {
@@ -67,7 +76,7 @@ def item_details(request, item_id):
     template = 'list_container/item-detail.html'
     return render(request, template, context)
 
-
+@login_required
 def item_update(request, item_id):
     #get single item
     item = Task.objects.get(id=item_id)
@@ -84,6 +93,7 @@ def item_update(request, item_id):
     template = 'list_container/item-update.html'
     return render(request, template, context)
 
+@login_required
 def item_delete(request, item_id):
     #get single item
     item = Task.objects.get(id=item_id)

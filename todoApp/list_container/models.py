@@ -1,12 +1,15 @@
 from django.db import models
-import datetime
+from django.conf import settings 
+import datetime 
 
+User = settings.AUTH_USER_MODEL
 # Create your models here.
 class ListContainer(models.Model):
 
     def __str__(self):
         return self.title
     
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=100, 
                             unique=True,
                             error_messages={'unique': 'This title is not unique, please try again'},

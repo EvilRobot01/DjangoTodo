@@ -7,7 +7,7 @@ class ListContainerModelForm(forms.ModelForm):
         fields = [
             'title'
         ]
-
+    
 class TaskModelForm(forms.ModelForm):
     class Meta:
         model = Task 

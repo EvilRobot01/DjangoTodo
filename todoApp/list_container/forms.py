@@ -15,6 +15,7 @@ class TaskModelForm(forms.ModelForm):
         fields = [
 
             'item_name',
+            'quantity',
             'details',
             'date'
         ] 

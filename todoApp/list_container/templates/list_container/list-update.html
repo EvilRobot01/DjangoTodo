@@ -1,6 +1,12 @@
+{% extends 'list_container/base.html' %}
+{% block body %}
+
 <h1>Update List</h1>
 <form method="POST">
     {% csrf_token %}
     {{ container_form.as_p }}
     <input type="submit" value="Update">
 </form>
+
+
+{% endblock %}

@@ -1,3 +1,7 @@
+
+{% extends 'list_container/base.html' %}
+
+{% block body %}
 <h1>Create new container</h1>
 <form method="POST">
     {% csrf_token %}
@@ -12,7 +16,10 @@
         <a href="{% url 'list-update' list.id %}"><button>Update</button></a>
         <a href="{% url 'list-delete' list.id %}"><button>Delete</button></a>
     </li>
+
 {% endfor %}
 {% else %}
     <p>Please Log in</p>
 {% endif %}
+
+{% endblock %}

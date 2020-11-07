@@ -1,3 +1,6 @@
+{% extends 'list_container/base.html' %}
+{% block body %}
+
 <h1>Update item</h1>
 <form method="POST">
     {% csrf_token %}
@@ -5,3 +8,6 @@
 
     <input type="submit" value="Update">
 </form>
+
+
+{% endblock %}

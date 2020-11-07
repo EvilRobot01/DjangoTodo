@@ -1,3 +1,5 @@
+{% extends 'list_container/base.html' %}
+{% block body %}
 <h1>Create new item</h1>
 <form method="POST">
     {% csrf_token %}
@@ -15,3 +17,6 @@
         <a href="{% url 'item-delete' item.id %}"><button>Delete</button></a>
     </li>
 {% endfor %}
+
+
+{% endblock %}

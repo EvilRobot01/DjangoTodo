@@ -1,0 +1,31 @@
+*{
+    font-family: 'Ubuntu', sans-serif;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+.nav-link{
+    color: white;
+}
+
+body{
+    background-color: white;
+}
+
+a{
+    color: #000;
+}
+a:hover {
+    color: red;
+}
+
+
+form{
+    background-color: gray;
+    color: honeydew;
+    padding: 1%;
+    font-size: 20px;
+}
+
+.dataType{
+    color: red;
+}

@@ -6,16 +6,18 @@
 <form method="POST">
     {% csrf_token %}
     {{ container_form.as_p }}
-    <input type="submit" value="Create">
+    <input class="btn btn-primary" type="submit" value="Create">
 </form>
 {% if user.is_authenticated %}
 {% for list in list_container %}
 
-    <li>
-        <a href="{% url 'item-list' list.id %}"><h2> {{ list.title }}</h2></a>
-        <a href="{% url 'list-update' list.id %}"><button>Update</button></a>
-        <a href="{% url 'list-delete' list.id %}"><button>Delete</button></a>
-    </li>
+    <ul class="list-group">
+        <li class="list-group-item  justify-content-between">
+            <a class="text" href="{% url 'item-list' list.id %}"><h2> {{ list.title }}</h2></a>
+            <a href="{% url 'list-update' list.id %}"><button class="btn btn-warning">Update</button></a>
+            <a href="{% url 'list-delete' list.id %}"><button class="btn btn-danger">Delete</button></a>
+        </li>
+    </ul>
 
 {% endfor %}
 {% else %}
